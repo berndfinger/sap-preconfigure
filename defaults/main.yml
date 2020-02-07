@@ -18,4 +18,18 @@ sap_preconfigure_modify_etc_hosts: no
 #  "Configuring Process Resource Limits" of SAP note 2002167/2772999):
 # sap_preconfigure_db_group_name: dba
 
+# Default Values for setting SAP Hostname according SAP Note#2002167
+#
+# Normally ansible_hostname, etc. is used on the admin network, while the service hostname that
+# need to be checked is a different one.
+# In this case, or if DNS is not configured properly, you need to set the following variables explizitly
+
+# SAP Hostname
+sap_preconfigure_hostname: '{{ ansible_hostname }}'
+# SAP Domain
+sap_preconfigure_domain: '{{ ansible_domain }}'
+# SAP IP Address
+sap_preconfigure_ip: '{{ ansible_default_ipv4.address }}'
+
+
 ...

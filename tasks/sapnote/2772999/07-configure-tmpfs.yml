@@ -16,19 +16,24 @@
   command: bash -lc "grep /dev/shm /etc/fstab"
   register: shell_result
   changed_when: False
+  when: not ansible_check_mode
 - debug:
     var: shell_result.stdout_lines, shell_result.stderr_lines
 
+# This task may throw an error if tmpfs is not configured, so it is skipped in check_mode
 - name: Remount /dev/shm
   command: bash -lc "mount -o remount /dev/shm"
   register: shell_result
+  when: not ansible_check_mode
 - debug:
     var: shell_result.stdout_lines, shell_result.stderr_lines
+  when: not ansible_check_mode
 
 - name: Check if /dev/shm is available
   command: bash -lc "df -k /dev/shm"
   register: shell_result
   changed_when: False
+  when: not ansible_check_mode
 - debug:
     var: shell_result.stdout_lines, shell_result.stderr_lines
 
